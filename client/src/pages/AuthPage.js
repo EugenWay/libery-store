@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useHttp } from "../hooks/useHttp";
 import { useMessage } from "../hooks/messageHook";
+import { AuthContext } from "../context/authContext";
 // import axios from "axios";
 
 export const AuthPage = () => {
+    const auth = useContext(AuthContext);
     const { loading, error, request, clearError } = useHttp();
     const message = useMessage();
     const [form, setForm] = useState({
@@ -28,14 +30,14 @@ export const AuthPage = () => {
         console.log(form);
     };
 
-    const submitHandler = async (event) => {
+    const loginHandler = async (event) => {
         event.preventDefault();
 
         try {
             console.log({ ...form });
             const data = await request("/api/auth/login", "POST", { ...form });
-
-            console.log("DATA", data);
+            message(data.message);
+            auth.login(data.token, data.userId);
         } catch (err) {}
     };
 
@@ -47,11 +49,9 @@ export const AuthPage = () => {
             const data = await request("/api/auth/register", "POST", {
                 ...form,
             });
-
+            message(data.message);
             console.log("DATA", data);
-        } catch (err) {
-            console.log(err.message);
-        }
+        } catch (err) {}
     };
 
     return (
@@ -89,7 +89,7 @@ export const AuthPage = () => {
                         <button
                             className="btn waves-effect waves-light"
                             style={{ marginRight: 20 }}
-                            onClick={submitHandler}
+                            onClick={loginHandler}
                         >
                             Login
                         </button>

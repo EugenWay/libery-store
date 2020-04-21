@@ -19,6 +19,10 @@ export const useHttp = () => {
                     throw new Error(data.message || "samething went wrong");
                 }
 
+                if (data.errors) {
+                    throw new Error(data.message);
+                }
+
                 setLoading(false);
 
                 return data;
