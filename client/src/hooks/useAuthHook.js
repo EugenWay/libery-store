@@ -16,7 +16,7 @@ export const useAuth = () => {
         );
     }, []);
 
-    const logOut = useCallback(() => {
+    const logout = useCallback(() => {
         setToken(null);
         setUserID(null);
 
@@ -27,9 +27,10 @@ export const useAuth = () => {
         const data = JSON.parse(localStorage.getItem("userData"));
 
         if (data && data.token) {
+            console.log(data);
             login(data.token, data.userID);
         }
     }, [login]);
 
-    return { login, logOut, token, userID };
+    return { login, logout, token, userID };
 };
