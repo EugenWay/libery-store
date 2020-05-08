@@ -35,7 +35,7 @@ export const useRoutes = (isAutentificated) => {
             <Route path="/login" exact>
                 <AuthPage />
             </Route>
-            <Redirect to="/" />
+            <Redirect to="/login" />
         </Switch>
     );
 };

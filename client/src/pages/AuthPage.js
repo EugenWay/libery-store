@@ -34,7 +34,6 @@ export const AuthPage = () => {
         event.preventDefault();
 
         try {
-            console.log({ ...form });
             const data = await request("/api/auth/login", "POST", { ...form });
             message(data.message);
             auth.login(data.token, data.userId);

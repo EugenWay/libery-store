@@ -27,7 +27,6 @@ export const useAuth = () => {
         const data = JSON.parse(localStorage.getItem("userData"));
 
         if (data && data.token) {
-            console.log(data);
             login(data.token, data.userID);
         }
     }, [login]);
