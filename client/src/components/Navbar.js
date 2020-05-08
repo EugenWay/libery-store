@@ -21,14 +21,14 @@ export const Navbar = () => {
                 <span className="brand-logo">LiberyStore</span>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     <li>
-                        <NavLink to="/create">Create</NavLink>
+                        <NavLink to="/admin/create">Create</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/links">All products</NavLink>
+                        <NavLink to="/admin">All products</NavLink>
                     </li>
                     <li>
                         <a href="/" onClick={logoutHandler}>
-                            Выйти
+                            LogOut
                         </a>
                     </li>
                 </ul>

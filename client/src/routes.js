@@ -5,22 +5,45 @@ import { IndexPage } from "./pages/IndexPage";
 import { CreatePage } from "./pages/CreatePage";
 import { DetailPage } from "./pages/DeteilPage";
 import { AuthPage } from "./pages/AuthPage";
+import { Navbar } from "./components/Navbar";
+
+const Wrapper = (props) => {
+    if (props.withNavbar) {
+        return (
+            <div>
+                <Navbar />
+                <div className="container">{props.cildrenComponent}</div>
+            </div>
+        );
+    }
+
+    return <div className="container">{props.cildrenComponent}</div>;
+};
 
 export const useRoutes = (isAutentificated) => {
     if (isAutentificated) {
         return (
             <Switch>
                 <Route path="/" exact>
-                    <IndexPage />
+                    <Wrapper cildrenComponent={<IndexPage />} />
                 </Route>
                 <Route path="/admin" exact>
-                    <AdminPage />
+                    <Wrapper
+                        cildrenComponent={<AdminPage />}
+                        withNavbar={true}
+                    />
                 </Route>
                 <Route path="/admin/create" exact>
-                    <CreatePage />
+                    <Wrapper
+                        cildrenComponent={<CreatePage />}
+                        withNavbar={true}
+                    />
                 </Route>
                 <Route path="/admin/product-deteil:id">
-                    <DetailPage />
+                    <Wrapper
+                        cildrenComponent={<DetailPage />}
+                        withNavbar={true}
+                    />
                 </Route>
                 <Redirect to="/admin" />
             </Switch>
@@ -30,10 +53,10 @@ export const useRoutes = (isAutentificated) => {
     return (
         <Switch>
             <Route path="/" exact>
-                <IndexPage />
+                <Wrapper cildrenComponent={<IndexPage />} />
             </Route>
             <Route path="/login" exact>
-                <AuthPage />
+                <Wrapper cildrenComponent={<AuthPage />} />
             </Route>
             <Redirect to="/login" />
         </Switch>

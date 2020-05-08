@@ -23,10 +23,7 @@ function App() {
                 isAuthenticated,
             }}
         >
-            <Router>
-                {isAuthenticated && <Navbar />}
-                <div className="container">{routes}</div>
-            </Router>
+            <Router>{routes}</Router>
         </AuthContext.Provider>
     );
 }
