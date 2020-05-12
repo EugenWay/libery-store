@@ -5,6 +5,7 @@ const config = require("config");
 const PORT = config.get("port") || 5000;
 
 const authRouter = require("./routes/auth");
+const productRouter = require("./routes/product");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/auth", authRouter);
+app.use("/api/product", productRouter);
 
 const startServer = async () => {
     try {
@@ -22,7 +24,7 @@ const startServer = async () => {
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-                useCreateIndex: true
+                useCreateIndex: true,
             },
             () => console.log("Connected to DB")
         );
