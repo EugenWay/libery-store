@@ -4,7 +4,7 @@ import { useMessage } from "../hooks/messageHook";
 import { Result } from "../components/Result";
 
 export const CreatePage = () => {
-    const { error, request, clearError } = useHttp();
+    const { request } = useHttp();
     const message = useMessage();
 
     const [loaded, setLoaded] = useState(false);
@@ -17,6 +17,9 @@ export const CreatePage = () => {
         image: "",
     });
 
+    const [file, setFile] = useState("");
+    const [filename, setFilename] = useState("Choose File");
+
     const changeHandler = (event) => {
         setForm({
             ...form,
@@ -27,23 +30,42 @@ export const CreatePage = () => {
     };
 
     const imageHandler = (event) => {
+        setFile(event.target.files[0]);
+        setFilename(event.target.files[0].name);
         setForm({
             ...form,
-            image: event.target.value,
+            image: `/uploads/${event.target.files[0].name}`,
         });
-
-        console.log(form);
+        console.log({
+            file,
+            filename,
+        });
     };
 
     const addHandler = async () => {
+        const formdata = new FormData();
+        formdata.append("file", file, filename);
+
         try {
+            const requestOptions = {
+                method: "POST",
+                body: formdata,
+                redirect: "follow",
+            };
+
+            const response = await fetch("/api/upload/", requestOptions);
+            const fileData = await response.json();
+
             const data = await request("/api/product", "POST", {
                 ...form,
                 price: Number(form.price),
             });
+
             message(data.message);
+
             setLoaded(true);
             console.log("DATA", data);
+            console.log("FILE", fileData);
         } catch (err) {}
     };
 
